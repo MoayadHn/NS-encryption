@@ -29,21 +29,26 @@ Bob-->Alice: Yes, I am sure we can talk!
 ### Compile
 To Compile the program simple run make command
 Note: "I used simple encryption and not AES, there might be some bugs in the communication, for example right when the session start the nonce will be sent again. The good part there is no known major problem, yet!."
-to run the program:
-1) run the server with argument -p <port number>:
->sudo ./server -p 445
-2) in separated window or a computer run a client with arguments -s <Server name> -g <server port> -n <client name> -p <secure channel port>
->sudo ./client -s localhost -g 445 -n Alice -p 2225 
-\n Chose option 2 to wait for connection
-3) in separated window  or a computer run a client with arguments -s <Server name> -g <server port> -n <client name> -p <secure channel port>
->sudo ./client -s localhost -g 445 -n Bob -p 2225 
-chose option 1 to request communication
-when prompted put the name of the other party ( case sensitive, the server will use this name to know the other person encryption key) for example here Alice
-when prompted put the server name or IP address of the other party for example here localhost
-When the secure channel is granted start chatting when prompted
+### To run the program:  
 
-Arguments:
--s followed by server name or IP address: define the server
--g followed by a port number: define the server port
--n followed by username: to define a name for the client
--p followed bz a port number: define the client port number
+1) run the server with argument '-p \<port number>':  
+>sudo ./server -p 445  
+
+2) in separated window or a computer run a client with arguments '-s \<Server name> -g \<server port> -n \<client name> -p \<secure channel port>':  
+>sudo ./client -s localhost -g 445 -n Alice -p 2225 
+
+- Choose option 2 to wait for connection.
+
+3) in separated window  or a computer run a client with arguments '-s \<Server name> -g \<server port> -n \<client name> -p \<secure channel port>':  
+>sudo ./client -s localhost -g 445 -n Bob -p 2225  
+
+- Choose option 1 to request communication.   
+- When prompted put the name of the other party (case sensitive, the server will use this name to know the other person encryption key) for example Alice.  
+- When prompted put the server name or IP address of the other party for example here localhost.  
+- When the secure channel is granted start chatting when prompted.  
+
+#### Arguments:  
+-s followed by server name or IP address: define the server.  
+-g followed by a port number: define the server port.  
+-n followed by username: to define a name for the client.  
+-p followed bz a port number: define the client port number.  
