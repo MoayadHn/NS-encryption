@@ -1,5 +1,6 @@
 # NS-encryption
-Needham and Schroeder encryption messaging client-server application
+Needham and Schroeder Protocol[^1] encryption messaging client-server application.
+
 ### Underlying process:
 1. Alice send request to communicatee with bob to the server plus nonce.
 2. The server respond with payload of 2 versions of the session key, one encrypted with Alice key, the other is encryptd with Bob key, and put the same nonce alice sent.
@@ -52,3 +53,5 @@ Note: "I used simple encryption and not AES, there might be some bugs in the com
 -g followed by a port number: define the server port.  
 -n followed by username: to define a name for the client.  
 -p followed bz a port number: define the client port number.  
+
+[^1]: https://en.wikipedia.org/wiki/Needham–Schroeder_protocol
