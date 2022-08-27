@@ -1,32 +1,6 @@
 /* server.c    server take the arguments -p port -r rate -q seq_no -l length*/
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <time.h>
-
-#define MAX_SIZE 51200
-
-void error(const char *msg){
-    perror(msg);
-    exit(1);
-}
-
-//function to encrypt using simple subsitution cypher
-void encryptMsg(char *msg, char *secret, char *key, int len){
-    int i =0;
-    for (i=0;i<len;i++){
-        secret[i] = (msg[i] - key[i%16]);
-    }
-    
-}
+#include "functions.c"
 
 int main(int argc, char *argv[]){
     // Variables declerations 
