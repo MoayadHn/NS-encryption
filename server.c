@@ -19,7 +19,7 @@ void error(const char *msg){
     exit(1);
 }
 
-//function to encrypt using subsitution cypher
+//function to encrypt using simple subsitution cypher
 void encryptMsg(char *msg, char *secret, char *key, int len){
     int i =0;
     for (i=0;i<len;i++){
@@ -29,21 +29,27 @@ void encryptMsg(char *msg, char *secret, char *key, int len){
 }
 
 int main(int argc, char *argv[]){
-    
+    // Variables declerations 
     int sock,k;
     unsigned int addr_len;
     int bytes_read;
     struct sockaddr_in server_addr , client_addr;
     int portno= -1;
     int buffSize;
+    // memory allocations 
     char *reciverKey = (char *) malloc(17*sizeof(char) );
     char *senderKey = (char *) malloc(17* sizeof(char));
     char *secretKey;
     secretKey = (char *) malloc(17 * sizeof(char));
-    struct tm *tm;
-    struct timeval t0;
     char *payload;
     payload = (char *) malloc(33 * sizeof(char) );
+    char *secret1;
+    secret1 = (char *) malloc(16 * sizeof(char));
+    char *secret2;
+    secret2 = (char *) malloc(16 * sizeof(char));
+
+    struct tm *tm;
+    struct timeval t0;
     // packet structure
     typedef struct packet{
         char type[1];
@@ -53,12 +59,9 @@ int main(int argc, char *argv[]){
         int length;
         char payload[MAX_SIZE];
     } packet;
+
     
     packet buffpacket;
-    char *secret1;
-    secret1 = (char *) malloc(16 * sizeof(char));
-    char *secret2;
-    secret2 = (char *) malloc(16 * sizeof(char));
     
     printf("--------------------------------------------------\n");
     printf("|           Trusted Server  aka Kathy             |\n");
@@ -147,7 +150,7 @@ int main(int argc, char *argv[]){
             int nonce = buffpacket.nonce ;
             printf("payload: %s", payload);
             
-            //generating packet
+            //generating replay packet
             buffpacket.type[0] = 'R';
             strcpy(buffpacket.to,buffpacket.from);
             strcpy(buffpacket.from,"Server");
@@ -174,5 +177,6 @@ int main(int argc, char *argv[]){
         fflush(stdout);
         
     }
+
     return 0;
 }
