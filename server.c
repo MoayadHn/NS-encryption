@@ -1,32 +1,6 @@
 /* server.c    server take the arguments -p port -r rate -q seq_no -l length*/
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <time.h>
-
-#define MAX_SIZE 51200
-
-void error(const char *msg){
-    perror(msg);
-    exit(1);
-}
-
-//function to encrypt using simple subsitution cypher
-void encryptMsg(char *msg, char *secret, char *key, int len){
-    int i =0;
-    for (i=0;i<len;i++){
-        secret[i] = (msg[i] - key[i%16]);
-    }
-    
-}
+#include "functions.c"
 
 int main(int argc, char *argv[]){
     // Variables declerations 
@@ -36,11 +10,13 @@ int main(int argc, char *argv[]){
     struct sockaddr_in server_addr , client_addr;
     int portno= -1;
     int buffSize;
+
     // memory allocations 
     char *reciverKey = (char *) malloc(17*sizeof(char) );
     char *senderKey = (char *) malloc(17* sizeof(char));
     char *secretKey;
     secretKey = (char *) malloc(17 * sizeof(char));
+    /* memory allocation for payload must be checked as it have bad smell */
     char *payload;
     payload = (char *) malloc(33 * sizeof(char) );
     char *secret1;
@@ -50,6 +26,7 @@ int main(int argc, char *argv[]){
 
     struct tm *tm;
     struct timeval t0;
+
     // packet structure
     typedef struct packet{
         char type[1];
@@ -97,8 +74,7 @@ int main(int argc, char *argv[]){
     bzero(&(server_addr.sin_zero),8);
     
     if (bind(sock,(struct sockaddr *)&server_addr,sizeof(struct sockaddr)) == -1){
-        perror("Bind");
-        exit(1);
+        fatalError("Fatal Error: Binding socket failed..\n");
     }
     
     addr_len = sizeof(struct sockaddr);
