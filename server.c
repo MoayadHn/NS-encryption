@@ -10,11 +10,13 @@ int main(int argc, char *argv[]){
     struct sockaddr_in server_addr , client_addr;
     int portno= -1;
     int buffSize;
+
     // memory allocations 
     char *reciverKey = (char *) malloc(17*sizeof(char) );
     char *senderKey = (char *) malloc(17* sizeof(char));
     char *secretKey;
     secretKey = (char *) malloc(17 * sizeof(char));
+    /* memory allocation for payload must be checked as it have bad smell */
     char *payload;
     payload = (char *) malloc(33 * sizeof(char) );
     char *secret1;
@@ -24,6 +26,7 @@ int main(int argc, char *argv[]){
 
     struct tm *tm;
     struct timeval t0;
+
     // packet structure
     typedef struct packet{
         char type[1];
@@ -71,8 +74,7 @@ int main(int argc, char *argv[]){
     bzero(&(server_addr.sin_zero),8);
     
     if (bind(sock,(struct sockaddr *)&server_addr,sizeof(struct sockaddr)) == -1){
-        perror("Bind");
-        exit(1);
+        fatalError("Fatal Error: Binding socket failed..\n");
     }
     
     addr_len = sizeof(struct sockaddr);
